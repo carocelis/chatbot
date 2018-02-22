@@ -1,13 +1,25 @@
 $(document).ready(() => {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyASbSb-bQEi9Yx1GCWv3vfZn-dXjaJJ-l4",
+    authDomain: "chatbot-lab89.firebaseapp.com",
+    databaseURL: "https://chatbot-lab89.firebaseio.com",
+    projectId: "chatbot-lab89",
+    storageBucket: "chatbot-lab89.appspot.com",
+    messagingSenderId: "656948156356"
+  };
+  firebase.initializeApp(config);
+
+  $('#content').hide();
   
-  $('#btn-reg-send').click(function registrar(){
+  $('#btn-reg-send').click(function reg(){
     var email = $('#reg-email').val();
     var pw = $('#reg-pw').val();
     var pw2 = $('#reg-pw2').val();
     
     firebase.auth().createUserWithEmailAndPassword(email, pw)
     .then(function(){
-      verificar();
+      verify();
     })
     .catch(function(error) {
     // Handle Errors here.
@@ -18,11 +30,15 @@ $(document).ready(() => {
     });
   })
 
-  $('#btn-signin-send').click(function ingreso(){
+  $('#btn-signin-send').click(function login(){
     var email2 = $('#signin-email').val();
     var password2 = $('#signin-pw').val();
     
-    firebase.auth().signInWithEmailAndPassword(email2, password2).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(email2, password2)
+    .then(function(){
+      window.location.reload(); // recargar la pagina
+    })
+    .catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -30,12 +46,12 @@ $(document).ready(() => {
   })
 
 
-  function observador(){
+  function viewer(){
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         console.log("Ha iniciado sesión");
-        aparece(user);
+        inicialized(user);
 
         var displayName = user.displayName;
         var email = user.email;
@@ -52,26 +68,23 @@ $(document).ready(() => {
       }
     });
   }
-  observador();
+  viewer();
 
-  function aparece(user){
+  function inicialized(user){
     // console.log(user);
     var user = user;
     if (user.emailVerified) {
       var content = $('#content');
-      content.append(`
-        <div class="alert alert-success" role="alert">
-          <h4 class="alert-heading">Bienvenid@! ${user.email}</h4>
-          <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-          <hr>
-          <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-        </div>
-        <button id="btn-logout" onclick="cerrar();" class="btn btn-danger">Cerrar Sesión</button>`);
+      var btnClose = $('#btn-close');
+
+      btnClose.empty();
+      btnClose.append(`
+        <button id="btn-logout" onclick="cerrar();" class="btn btn-danger ml-2 my-2 my-sm-0 btn-sm">Cerrar Sesión</button>`);
+      $('#content').show();
     } 
   }
 });
 
-//--------------------------------Chatbot----------------------------------------------
 function cerrar(){
   firebase.auth().signOut()
   .then(function(){
@@ -83,7 +96,7 @@ function cerrar(){
   })
 };
 
-function verificar(){
+function verify(){
   var user = firebase.auth().currentUser;
 
   user.sendEmailVerification().then(function() {
@@ -95,27 +108,27 @@ function verificar(){
   });
 }
 
-$(".send").click(function(){
-  var text = $('.mytext').val(); 
-  if (text !== ""){
-    insertChat("me", text);            
-    $('.mytext').val('');
+// ******************* CHAT BOT ***************
+
+$('#send').click(function(){
+  var text = $('#mytext').val();
+  // console.log(text);
+  if (text !== ''){
+    insertChat('me', text);            
+    $('#mytext').val('');
   }
   
-  console.log(text);
-
   fetch(`https://www.cleverbot.com/getreply?key=CC7bxld2Rq52cSUQl2RUwyvWQ4w&input=${text}&output=${'#'}&cs=MXYxCTh2MQlBdldYSlo5SEpWQ0wJMUZ2MTUxOTE3NTYyNwk2NGlBIG1pbnV0ZSBpcyBzaXh0eSBzZWNvbmRzIGxvbmcuLgk=&callback=ProcessReply`)
   .then(function(response) {
     return response.json();
   })
-
   .then(function(data) {
-    console.log(data);
-    console.log(data.output);
+    // console.log(data);
+    // console.log(data.output);
     var output = data.output;
-    insertOutput("you", output);
+    insertOutput('you', output);
   })
-})
+});
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -123,41 +136,39 @@ function formatAMPM(date) {
   var ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
 }
 
 function insertChat(who, text, time = 0){
-  var control = "";
   var date = formatAMPM(new Date());
-  control = '<li style="width:95%;">' +
-              '<div class="msj-rta macro">' +
-                '<div class="text text-r">' +
-                  '<p>'+text+'</p>' +
-                  '<p><small>'+date+'</small></p>' +
-                '</div>' +
-              '<div class="avatar"></div>' +                                
-            '</li>';
-  setTimeout(
-    function(){                        
-      $("ul").append(control);
-    }, time);  
+  
+  setTimeout(function(){                        
+      $('ul').append(`
+        <li style="width:95%;">
+          <div class="msj-rta macro">
+            <div class="text text-r">
+              <p>${text}</p>
+              <p><small>${date}</small></p>
+            </div>
+          </div>
+        </li>`);
+  }, time);  
 }  
 
 function insertOutput(who, text, time = 0){
-  var control2 = "";
   var date = formatAMPM(new Date());
-  control2 = '<li style="width:95%">' +
-              '<div class="msj macro">' +
-                '<div class="text text-l">' +
-                  '<p id="answer">'+text+'</p>' +
-                  '<p><small>'+date+'</small></p>' +
-                '</div>' +
-              '</div>' +
-            '</li>';         
-  setTimeout(
-    function(){                        
-      $("ul").append(control2);
-    }, time);  
+
+  setTimeout(function(){                        
+      $('ul').append(`
+        <li style="width:95%">
+          <div class="msj macro">
+            <div class="text text-l">
+              <p id="answer">${text}</p>
+              <p><small>${date}</small></p>
+           </div>
+          </div>
+       </li>`);
+  }, time);   
 }

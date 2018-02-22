@@ -4,53 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie-edge">
-  <title>Autentificación con Firebase</title>
+  <title>Chatbot</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  <link rel="stylesheet" href="assets/css/style.css">
   
   <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyASbSb-bQEi9Yx1GCWv3vfZn-dXjaJJ-l4",
-    authDomain: "chatbot-lab89.firebaseapp.com",
-    databaseURL: "https://chatbot-lab89.firebaseio.com",
-    projectId: "chatbot-lab89",
-    storageBucket: "chatbot-lab89.appspot.com",
-    messagingSenderId: "656948156356"
-  };
-  firebase.initializeApp(config);
-</script>
+<!-- <script>
+  
+</script> -->
 </head>
 <body>
   <div class="container mt-3">
     <nav class="navbar navbar-dark bg-primary justify-content-between">
-    <a class="navbar-brand">Chatbot</a>
-    <div class="form-inline">
-      <input id="signin-email" type="email" placeholder="Ingresa tu email" class="form-control form-control-sm mr-sm-2">
-      <input id="signin-pw" type="password" placeholder="Ingresa tu contraseña" class="form-control form-control-sm mr-sm-2">
-      <button id="btn-signin-send" class="btn btn-dark my-2 my-sm-0 btn-sm mr-sm-2">Ingresar</button>
-      <!-- Botón que abre el model de registro -->
-      <button class="btn btn-danger my-2 my-sm-0 btn-sm" data-toggle="modal" data-target="#regModal">Registrate!</button>
-    </div>
+      <a class="navbar-brand">Chatbot</a>
+      <div class="form-inline" id="btn-close">
+        <input id="signin-email" type="email" placeholder="Ingresa tu email" class="form-control form-control-sm mr-sm-2">
+        <input id="signin-pw" type="password" placeholder="Ingresa tu contraseña" class="form-control form-control-sm mr-sm-2">
+        <button id="btn-signin-send" class="btn btn-dark my-2 my-sm-0 btn-sm mr-sm-2">Ingresar</button>
+        <!-- Botón que abre el model de registro -->
+        <button class="btn btn-danger my-2 my-sm-0 btn-sm" data-toggle="modal" data-target="#regModal">Registrate!</button>
+      </div>
     </nav>
   </div>
 
   <!-- Contenido -->
-<div class="container">
-  <div id="content">
-    <div class="col-8 frame">
-      <ul></ul>
-      <div>
-        <div class="msj-rta macro" style="margin:auto">                     
+  <div class="container">
+    <div id="content">
+      <div class="col-12 frame">
+        <ul></ul>
+        <div class="msj-rta macro" style="margin:auto">               
           <div class="text text-r" style="background:whitesmoke !important">
-            <input class="mytext" placeholder="Type a message"/>
-          </div>
-          <button type="button" class="btn btn-outline-secondary send">Enviar</button> 
+            <div class="form-inline">
+              <input id="mytext" class="form-control form-control-sm mr-sm-2" placeholder="Escribe tu mensaje aquí"/>
+              <button id="send" class="btn btn-success my-2 my-sm-0 btn-sm">Enviar</button>
+            </div>
+          </div> 
         </div>
       </div>
     </div>
   </div>
-</div>
+
   <!-- Modal de registro -->
   <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -63,8 +55,19 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <input id="reg-email" class="form-control mb-3" type="email" placeholder="Ingresa tu email">
-            <input id="reg-pw" class="form-control" type="password" placeholder="Ingresa tu contraseña">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text mb-3" id="basic-addon1"><i class="far fa-envelope"></i></span>
+              </div>
+              <input id="reg-email" class="form-control mb-3" type="email" placeholder="Ingresa tu email" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
+              </div>
+              <input id="reg-pw" class="form-control" type="password" placeholder="Ingresa tu contraseña" aria-describedby="basic-addon2">
+            </div>            
           </div>
         </div>
         <div class="modal-footer">
@@ -78,6 +81,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
