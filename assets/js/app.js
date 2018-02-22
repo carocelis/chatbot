@@ -71,6 +71,7 @@ $(document).ready(() => {
   }
 });
 
+//--------------------------------Chatbot----------------------------------------------
 function cerrar(){
   firebase.auth().signOut()
   .then(function(){
@@ -92,4 +93,71 @@ function verificar(){
     console.log(error);
     // An error happened.
   });
+}
+
+$(".send").click(function(){
+  var text = $('.mytext').val(); 
+  if (text !== ""){
+    insertChat("me", text);            
+    $('.mytext').val('');
+  }
+  
+  console.log(text);
+
+  fetch(`https://www.cleverbot.com/getreply?key=CC7bxld2Rq52cSUQl2RUwyvWQ4w&input=${text}&output=${'#'}&cs=MXYxCTh2MQlBdldYSlo5SEpWQ0wJMUZ2MTUxOTE3NTYyNwk2NGlBIG1pbnV0ZSBpcyBzaXh0eSBzZWNvbmRzIGxvbmcuLgk=&callback=ProcessReply`)
+  .then(function(response) {
+    return response.json();
+  })
+
+  .then(function(data) {
+    console.log(data);
+    console.log(data.output);
+    var output = data.output;
+    insertOutput("you", output);
+  })
+})
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
+function insertChat(who, text, time = 0){
+  var control = "";
+  var date = formatAMPM(new Date());
+  control = '<li style="width:95%;">' +
+              '<div class="msj-rta macro">' +
+                '<div class="text text-r">' +
+                  '<p>'+text+'</p>' +
+                  '<p><small>'+date+'</small></p>' +
+                '</div>' +
+              '<div class="avatar"></div>' +                                
+            '</li>';
+  setTimeout(
+    function(){                        
+      $("ul").append(control);
+    }, time);  
+}  
+
+function insertOutput(who, text, time = 0){
+  var control2 = "";
+  var date = formatAMPM(new Date());
+  control2 = '<li style="width:95%">' +
+              '<div class="msj macro">' +
+                '<div class="text text-l">' +
+                  '<p id="answer">'+text+'</p>' +
+                  '<p><small>'+date+'</small></p>' +
+                '</div>' +
+              '</div>' +
+            '</li>';         
+  setTimeout(
+    function(){                        
+      $("ul").append(control2);
+    }, time);  
 }
