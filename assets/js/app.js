@@ -11,12 +11,12 @@ $(document).ready(() => {
   firebase.initializeApp(config);
 
   $('#content').hide();
-  
+
   $('#btn-reg-send').click(function reg(){
     var email = $('#reg-email').val();
     var pw = $('#reg-pw').val();
     var pw2 = $('#reg-pw2').val();
-    
+
     firebase.auth().createUserWithEmailAndPassword(email, pw)
     .then(function(){
       verify();
@@ -33,7 +33,7 @@ $(document).ready(() => {
   $('#btn-signin-send').click(function login(){
     var email2 = $('#signin-email').val();
     var password2 = $('#signin-pw').val();
-    
+
     firebase.auth().signInWithEmailAndPassword(email2, password2)
     .then(function(){
       window.location.reload(); // recargar la pagina
@@ -44,7 +44,6 @@ $(document).ready(() => {
     var errorMessage = error.message;
     });
   })
-
 
   function viewer(){
     firebase.auth().onAuthStateChanged(function(user) {
@@ -81,7 +80,7 @@ $(document).ready(() => {
       btnClose.append(`
         <button id="btn-logout" onclick="cerrar();" class="btn btn-danger ml-2 my-2 my-sm-0 btn-sm">Cerrar Sesión</button>`);
       $('#content').show();
-    } 
+    }
   }
 });
 
@@ -114,10 +113,10 @@ $('#send').click(function(){
   var text = $('#mytext').val();
   // console.log(text);
   if (text !== ''){
-    insertChat('me', text);            
+    insertChat('me', text);
     $('#mytext').val('');
   }
-  
+
   fetch(`https://www.cleverbot.com/getreply?key=CC7bxld2Rq52cSUQl2RUwyvWQ4w&input=${text}&output=${'#'}&cs=MXYxCTh2MQlBdldYSlo5SEpWQ0wJMUZ2MTUxOTE3NTYyNwk2NGlBIG1pbnV0ZSBpcyBzaXh0eSBzZWNvbmRzIGxvbmcuLgk=&callback=ProcessReply`)
   .then(function(response) {
     return response.json();
@@ -141,10 +140,10 @@ function formatAMPM(date) {
   return strTime;
 }
 
-function insertChat(who, text, time = 0){
+function insertChat(who, text, time = 0) {
   var date = formatAMPM(new Date());
-  
-  setTimeout(function(){                        
+
+  setTimeout(function() {
       $('ul').append(`
         <li style="width:95%;">
           <div class="msj-rta macro">
@@ -154,13 +153,13 @@ function insertChat(who, text, time = 0){
             </div>
           </div>
         </li>`);
-  }, time);  
-}  
+  }, time);
+}
 
 function insertOutput(who, text, time = 0){
   var date = formatAMPM(new Date());
 
-  setTimeout(function(){                        
+  setTimeout(function() {
       $('ul').append(`
         <li style="width:95%">
           <div class="msj macro">
@@ -170,5 +169,5 @@ function insertOutput(who, text, time = 0){
            </div>
           </div>
        </li>`);
-  }, time);   
+  }, time);
 }

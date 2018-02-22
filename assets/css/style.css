@@ -1,16 +1,26 @@
-#mytext{
+body {
+  background-image: url('../img/833421354.jpg');
+  /*  background-color: rgba(0, 0, 0, 0.5); */
+}
+
+#send {
+  margin-left: 5%!important;
+}
+
+#mytext {
   border: 0;
   padding: 10px;
   background: whitesmoke;
+  /*margin-right: 6%;*/
 }
 
-.text{
+.text {
   width: 75%;
   display: flex;
   flex-direction: column;
 }
 
-.text > p:first-of-type{
+.text > p:first-of-type {
   width: 100%;
   margin-top: 0;
   margin-bottom: auto;
@@ -18,7 +28,7 @@
   font-size: 12px;
 }
 
-.text > p:last-of-type{
+.text > p:last-of-type {
   width: 100%;
   text-align: right;
   color: silver;
@@ -26,41 +36,42 @@
   margin-top: auto;
 }
 
-.text-l{
+.text-l {
   float: left;
   padding-right: 10px;
 }
 
-.text-r{
+.text-r {
   float: right;
   padding-left: 10px;
 }
 
-.macro{
+.macro {
   margin-top: 5px;
-  width: 85%;
+  width: 95%;
   border-radius: 5px;
-  padding: 5px;
+  padding: 0.5%;
   display: flex;
 }
 
-.msj-rta{
+.msj-rta {
   float: right;
   background: whitesmoke;
 }
 
-.msj{
+.msj {
   float: left;
   background: #fff;
+/*  opacity: 0.2;*/
 }
 
-.frame{
+.frame {
   background: #e0e0de;
   height :85vh;
   overflow: hidden;
 }
 
-.frame > div:last-of-type{
+.frame > div:last-of-type {
   position: absolute;
   bottom: 0.1em;
   display: flex;
@@ -78,7 +89,7 @@ ul {
   flex-direction: column;
 }
 
-.msj:before{
+.msj:before {
   width: 0;
   height: 0;
   content: '';
@@ -87,14 +98,12 @@ ul {
   position: relative;
   border-style: solid;
   border-width: 0 13px 13px 0;
-  border-color: transparent #ffffff transparent transparent;            
+  border-color: transparent #ffffff transparent transparent;
 }
 
-
-
-input:focus{
+input:focus {
   outline: none;
-}        
+}
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #d4d4d4;
 }
@@ -106,4 +115,4 @@ input:focus{
 }
 :-moz-placeholder { /* Firefox 18- */
   color: #d4d4d4;
-}   
+}

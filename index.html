@@ -6,38 +6,34 @@
   <meta http-equiv="X-UA-Compatible" content="ie-edge">
   <title>Chatbot</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  <link rel="stylesheet" href="assets/css/style.css">
-  
   <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
-<!-- <script>
-  
-</script> -->
 </head>
 <body>
-  <div class="container mt-3">
-    <nav class="navbar navbar-dark bg-primary justify-content-between">
-      <a class="navbar-brand">Chatbot</a>
-      <div class="form-inline" id="btn-close">
-        <input id="signin-email" type="email" placeholder="Ingresa tu email" class="form-control form-control-sm mr-sm-2">
-        <input id="signin-pw" type="password" placeholder="Ingresa tu contraseña" class="form-control form-control-sm mr-sm-2">
-        <button id="btn-signin-send" class="btn btn-dark my-2 my-sm-0 btn-sm mr-sm-2">Ingresar</button>
-        <!-- Botón que abre el model de registro -->
-        <button class="btn btn-danger my-2 my-sm-0 btn-sm" data-toggle="modal" data-target="#regModal">Registrate!</button>
-      </div>
-    </nav>
-  </div>
+  <div class="bg col-12">
+    <div class="container">
+      <nav class="mt-3 navbar navbar-dark bg-info justify-content-between">
+        <a class="navbar-brand">Chatbot</a>
+        <div class="form-inline" id="btn-close">
+          <input id="signin-email" type="email" placeholder="Ingresa tu email" class="form-control form-control-sm mr-sm-2">
+          <input id="signin-pw" type="password" placeholder="Ingresa tu contraseña" class="form-control form-control-sm mr-sm-2">
+          <button id="btn-signin-send" class="btn btn-dark my-2 my-sm-0 btn-sm mr-sm-2">Ingresar</button>
+          <!-- Botón que abre el model de registro -->
+          <button class="btn btn-danger my-2 my-sm-0 btn-sm" data-toggle="modal" data-target="#regModal">Registrate!</button>
+        </div>
+      </nav>
+    </div>
 
-  <!-- Contenido -->
-  <div class="container">
-    <div id="content">
-      <div class="col-12 frame">
-        <ul></ul>
-        <div class="msj-rta macro" style="margin:auto">               
-          <div class="text text-r" style="background:whitesmoke !important">
-            <div class="form-inline">
+    <!-- Contenido -->
+    <div class="container">
+      <div id="content">
+        <div class="col-12 frame">
+          <ul></ul>
+          <div class="msj-rta macro mb-2">
+            <div class="text text-r" style="background:whitesmoke !important">
               <input id="mytext" class="form-control form-control-sm mr-sm-2" placeholder="Escribe tu mensaje aquí"/>
-              <button id="send" class="btn btn-success my-2 my-sm-0 btn-sm">Enviar</button>
             </div>
-          </div> 
+            <button id="send" class="btn btn-outline-info" type="button">Enviar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +63,7 @@
                 <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
               </div>
               <input id="reg-pw" class="form-control" type="password" placeholder="Ingresa tu contraseña" aria-describedby="basic-addon2">
-            </div>            
+            </div>
           </div>
         </div>
         <div class="modal-footer">
